@@ -6,13 +6,17 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Analytics from './pages/Analytics';
 import Layout from './components/Layout';
+import { LoadingSpinner } from './components/common';
 
 function App() {
   const { user, loading } = useContext(AuthContext);
 
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="flex flex-col items-center gap-4">
+        <LoadingSpinner size="lg" />
+        <p className="text-slate-600 dark:text-slate-400">Loading...</p>
+      </div>
     </div>
   );
 
