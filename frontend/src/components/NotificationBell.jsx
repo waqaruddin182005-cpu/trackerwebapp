@@ -1,9 +1,9 @@
 import { useContext, useState, useEffect } from 'react';
 import { Bell, X } from 'lucide-react';
-import { NotificationContext } from '../../context/NotificationContext';
-import { AuthContext } from '../../context/AuthContext';
+import { NotificationContext } from '../context/NotificationContext';
+import { AuthContext } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { formatDate } from '../../utils/helpers';
+import { formatDate } from '../utils/helpers';
 
 export const NotificationBell = () => {
   const { user } = useContext(AuthContext);
