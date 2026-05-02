@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Expense = require('../models/Expense');
 const Alert = require('../models/Alert');
 const Notification = require('../models/Notification');
@@ -161,7 +162,7 @@ exports.getCategoryWiseSpending = async (req, res) => {
     const expenses = await Expense.aggregate([
       {
         $match: {
-          user: require('mongoose').Types.ObjectId(userId),
+          user: new mongoose.Types.ObjectId(userId),
           type: 'expense',
           ...dateFilter
         }
