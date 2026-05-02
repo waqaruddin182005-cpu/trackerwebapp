@@ -10,4 +10,8 @@ const expenseSchema = new mongoose.Schema({
   description: { type: String }
 }, { timestamps: true });
 
+// Add indexes for faster queries
+expenseSchema.index({ user: 1, date: -1 });
+expenseSchema.index({ user: 1, type: 1 });
+
 module.exports = mongoose.model('Expense', expenseSchema);
