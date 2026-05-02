@@ -108,9 +108,8 @@ export const NotificationBell = () => {
                       key={notification._id}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      className={`p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer transition-colors ${
-                        notification.isRead ? 'opacity-60' : ''
-                      }`}
+                      className={`p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer transition-colors ${notification.isRead ? 'opacity-60' : ''
+                        }`}
                       onClick={() => handleMarkAsRead(notification._id)}
                     >
                       <div className="flex items-start gap-3">
