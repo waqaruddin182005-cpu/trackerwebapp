@@ -10,7 +10,7 @@ const ExpenseList = ({ expenses, fetchExpenses }) => {
   const handleDelete = async (id) => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      await axios.delete(`http://localhost:5000/api/expenses/${id}`, config);
+      await axios.delete(`/api/expenses/${id}`, config);
       fetchExpenses();
     } catch (error) {
       console.error('Error deleting expense:', error);

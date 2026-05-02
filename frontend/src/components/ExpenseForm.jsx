@@ -26,7 +26,7 @@ const ExpenseForm = ({ fetchExpenses }) => {
         headers: { Authorization: `Bearer ${user.token}` },
       };
       await axios.post(
-        'http://localhost:5000/api/expenses',
+        '/api/expenses',
         { title, amount: Number(amount), type, category, date: date || undefined },
         config
       );

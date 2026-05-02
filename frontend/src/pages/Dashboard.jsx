@@ -14,7 +14,7 @@ const Dashboard = () => {
   const fetchExpenses = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.get('http://localhost:5000/api/expenses', config);
+      const { data } = await axios.get('/api/expenses', config);
       setTransactions(data);
     } catch (error) {
       console.error('Error fetching transactions:', error);
