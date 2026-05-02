@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { formatCurrency } from '../utils/helpers';
 
 const SummaryCard = ({ title, amount, icon: Icon, trend, isExpense }) => {
   return (
@@ -29,7 +30,7 @@ const SummaryCard = ({ title, amount, icon: Icon, trend, isExpense }) => {
       <div className="relative z-10">
         <h3 className="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">{title}</h3>
         <h2 className="text-3xl font-bold text-slate-800 dark:text-white">
-          ${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          {formatCurrency(amount)}
         </h2>
       </div>
     </motion.div>

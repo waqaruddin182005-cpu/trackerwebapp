@@ -129,7 +129,7 @@ exports.getMonthlyComparison = async (req, res) => {
     });
 
     const result = monthsArray.map(month => ({
-      month: new Date(month + '-01').toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+      month: new Date(month + '-01').toLocaleDateString('en-IN', { month: 'short', year: 'numeric' }),
       monthKey: month,
       income: monthlyComparison[month].income,
       expense: monthlyComparison[month].expense,

@@ -1,10 +1,10 @@
 /**
- * Format currency to USD
+ * Format currency to INR
  */
 export const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'USD'
+    currency: 'INR'
   }).format(amount);
 };
 

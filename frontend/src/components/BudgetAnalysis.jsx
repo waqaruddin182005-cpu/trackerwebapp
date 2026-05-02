@@ -43,7 +43,7 @@ const BudgetAnalysis = ({ expenses }) => {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-center">
         <h3 className="text-lg font-medium text-gray-500 mb-2">Total Expenses</h3>
-        <p className="text-4xl font-bold text-gray-900">${totalExpenses.toFixed(2)}</p>
+        <p className="text-4xl font-bold text-gray-900">₹{totalExpenses.toFixed(2)}</p>
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
         <h3 className="text-lg font-medium text-gray-900 mb-4">Expenses by Category</h3>

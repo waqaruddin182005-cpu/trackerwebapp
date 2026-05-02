@@ -37,7 +37,7 @@ exports.exportPDF = async (req, res) => {
     yPosition += 5;
     doc.text(`Email: ${user.email}`, 15, yPosition);
     yPosition += 5;
-    doc.text(`Generated: ${new Date().toLocaleDateString()}`, 15, yPosition);
+    doc.text(`Generated: ${new Date().toLocaleDateString('en-IN')}`, 15, yPosition);
 
     // Summary
     const totalIncome = expenses.filter(e => e.type === 'income').reduce((sum, e) => sum + e.amount, 0);
@@ -50,9 +50,9 @@ exports.exportPDF = async (req, res) => {
 
     doc.setFontSize(11);
     doc.setTextColor(0);
-    doc.text(`Total Income: $${totalIncome.toFixed(2)}`, 20, yPosition + 8);
-    doc.text(`Total Expenses: $${totalExpense.toFixed(2)}`, 20, yPosition + 16);
-    doc.text(`Net Savings: $${totalSavings.toFixed(2)}`, 20, yPosition + 24);
+    doc.text(`Total Income: ₹${totalIncome.toFixed(2)}`, 20, yPosition + 8);
+    doc.text(`Total Expenses: ₹${totalExpense.toFixed(2)}`, 20, yPosition + 16);
+    doc.text(`Net Savings: ₹${totalSavings.toFixed(2)}`, 20, yPosition + 24);
 
     yPosition += 40;
 
@@ -76,9 +76,9 @@ exports.exportPDF = async (req, res) => {
         yPosition = 10;
       }
 
-      const dateStr = new Date(expense.date).toLocaleDateString();
+      const dateStr = new Date(expense.date).toLocaleDateString('en-IN');
       const typeStr = expense.type === 'income' ? 'Income' : 'Expense';
-      const amountStr = `$${expense.amount.toFixed(2)}`;
+      const amountStr = `₹${expense.amount.toFixed(2)}`;
       const description = expense.description || '-';
 
       doc.setTextColor(0);

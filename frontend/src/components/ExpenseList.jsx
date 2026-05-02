@@ -3,6 +3,7 @@ import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { Trash2, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { formatCurrency } from '../utils/helpers';
 
 const ExpenseList = ({ expenses, fetchExpenses }) => {
   const { user } = useContext(AuthContext);
@@ -71,11 +72,11 @@ const ExpenseList = ({ expenses, fetchExpenses }) => {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                      {new Date(transaction.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      {new Date(transaction.date).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right font-bold">
                       <span className={isIncome ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'}>
-                        {isIncome ? '+' : '-'}${transaction.amount.toFixed(2)}
+                        {isIncome ? '+' : '-'}{formatCurrency(transaction.amount)}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right">

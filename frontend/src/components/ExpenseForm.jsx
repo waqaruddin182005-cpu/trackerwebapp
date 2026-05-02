@@ -92,7 +92,7 @@ const ExpenseForm = ({ fetchExpenses }) => {
           <div>
             <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Amount</label>
             <div className="relative">
-              <span className="absolute left-4 top-2.5 text-slate-500">$</span>
+              <span className="absolute left-4 top-2.5 text-slate-500">₹</span>
               <input
                 type="number"
                 required

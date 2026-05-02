@@ -172,7 +172,7 @@ const Dashboard = () => {
           <CardContent>
             <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Average Daily</h3>
             <p className="text-2xl font-bold text-orange-600">
-              {transactions.length > 0 ? formatCurrency(totalExpense / 30) : '$0.00'}
+              {transactions.length > 0 ? formatCurrency(totalExpense / 30) : formatCurrency(0)}
             </p>
             <p className="text-sm text-slate-600 dark:text-slate-400">Spending</p>
           </CardContent>

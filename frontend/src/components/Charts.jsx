@@ -29,7 +29,7 @@ const CustomTooltip = ({ active, payload }) => {
       <div className="bg-white dark:bg-slate-800 p-2 border border-slate-200 dark:border-slate-600 rounded shadow-lg">
         {payload.map((entry, index) => (
           <p key={index} style={{ color: entry.color }} className="text-sm font-medium">
-            {entry.name}: ${entry.value.toFixed(2)}
+            {entry.name}: ₹{entry.value.toFixed(2)}
           </p>
         ))}
       </div>
@@ -198,7 +198,7 @@ export const CategoryPieChart = ({ data, isLoading = false }) => {
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
+          <Tooltip formatter={(value) => `₹${value.toFixed(2)}`} />
         </PieChart>
       </ResponsiveContainer>
     </motion.div>
@@ -238,7 +238,7 @@ export const IncomeExpensePieChart = ({ income, expense, isLoading = false }) =>
             <Cell fill="#10B981" />
             <Cell fill="#EF4444" />
           </Pie>
-          <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
+          <Tooltip formatter={(value) => `₹${value.toFixed(2)}`} />
         </PieChart>
       </ResponsiveContainer>
     </motion.div>

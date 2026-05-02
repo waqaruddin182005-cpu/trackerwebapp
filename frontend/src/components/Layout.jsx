@@ -45,7 +45,7 @@ const Layout = ({ children }) => {
               </button>
               <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
                 <div className="h-8 w-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold">$</span>
+                  <span className="text-white font-bold">₹</span>
                 </div>
                 <span className="font-bold text-lg text-slate-900 dark:text-white hidden sm:inline">
                   Expense Tracker
