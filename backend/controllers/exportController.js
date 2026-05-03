@@ -1,4 +1,5 @@
 const jsPDF = require('jspdf');
+require('jspdf-autotable');
 const Papa = require('papaparse');
 const Expense = require('../models/Expense');
 const User = require('../models/User');
@@ -22,7 +23,6 @@ exports.exportPDF = async (req, res) => {
 
     // Create PDF
     const doc = new jsPDF();
-    const pageHeight = doc.internal.pageSize.getHeight();
     const pageWidth = doc.internal.pageSize.getWidth();
     let yPosition = 10;
 
@@ -50,56 +50,77 @@ exports.exportPDF = async (req, res) => {
 
     doc.setFontSize(11);
     doc.setTextColor(0);
-    doc.text(`Total Income: ₹${totalIncome.toFixed(2)}`, 20, yPosition + 8);
-    doc.text(`Total Expenses: ₹${totalExpense.toFixed(2)}`, 20, yPosition + 16);
-    doc.text(`Net Savings: ₹${totalSavings.toFixed(2)}`, 20, yPosition + 24);
+    doc.text(`Total Income: ₹${totalIncome.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, 20, yPosition + 8);
+    doc.text(`Total Expenses: ₹${totalExpense.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, 20, yPosition + 16);
+    doc.text(`Net Savings: ₹${totalSavings.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, 20, yPosition + 24);
 
     yPosition += 40;
 
-    // Table header
-    doc.setFontSize(10);
-    doc.setFillColor(240, 240, 240);
-    doc.rect(15, yPosition, pageWidth - 30, 8, 'F');
-    doc.text('Date', 20, yPosition + 6);
-    doc.text('Category', 50, yPosition + 6);
-    doc.text('Type', 100, yPosition + 6);
-    doc.text('Amount', 130, yPosition + 6);
-    doc.text('Description', 160, yPosition + 6);
+    // Prepare table data
+    const tableData = expenses.map(expense => [
+      new Date(expense.date).toLocaleDateString('en-IN'),
+      expense.category,
+      expense.type === 'income' ? 'Income' : 'Expense',
+      `₹${expense.amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      expense.description || '-'
+    ]);
 
-    yPosition += 10;
-
-    // Table rows
-    doc.setFontSize(9);
-    expenses.forEach((expense, index) => {
-      if (yPosition > pageHeight - 20) {
-        doc.addPage();
-        yPosition = 10;
-      }
-
-      const dateStr = new Date(expense.date).toLocaleDateString('en-IN');
-      const typeStr = expense.type === 'income' ? 'Income' : 'Expense';
-      const amountStr = `₹${expense.amount.toFixed(2)}`;
-      const description = expense.description || '-';
-
-      doc.setTextColor(0);
-      doc.text(dateStr, 20, yPosition);
-      doc.text(expense.category, 50, yPosition);
-      doc.text(typeStr, 100, yPosition);
-      doc.text(amountStr, 130, yPosition);
-      doc.text(description.substring(0, 30), 160, yPosition);
-
-      yPosition += 8;
+    // Add table
+    doc.autoTable({
+      head: [['Date', 'Category', 'Type', 'Amount', 'Description']],
+      body: tableData,
+      startY: yPosition,
+      styles: {
+        fontSize: 9,
+        cellPadding: 3,
+      },
+      headStyles: {
+        fillColor: [240, 240, 240],
+        textColor: 0,
+        fontSize: 10,
+      },
+      alternateRowStyles: {
+        fillColor: [250, 250, 250],
+      },
+      margin: { top: 10 },
     });
 
+    // Charts summary (text-based)
+    const lastY = doc.lastAutoTable.finalY + 20;
+    if (lastY < doc.internal.pageSize.getHeight() - 50) {
+      doc.setFontSize(12);
+      doc.text('Charts Summary:', 15, lastY);
+
+      const categories = {};
+      expenses.forEach(exp => {
+        if (exp.type === 'expense') {
+          categories[exp.category] = (categories[exp.category] || 0) + exp.amount;
+        }
+      });
+
+      const topCategories = Object.entries(categories)
+        .sort(([,a], [,b]) => b - a)
+        .slice(0, 5);
+
+      doc.setFontSize(10);
+      topCategories.forEach(([cat, amt], idx) => {
+        doc.text(`${cat}: ₹${amt.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, 20, lastY + 10 + (idx * 5));
+      });
+    }
+
     // Footer
-    doc.setFontSize(8);
-    doc.setTextColor(150);
-    doc.text(
-      `Page ${doc.internal.getCurrentPageInfo().pageNumber} of ${doc.internal.pages.length}`,
-      pageWidth / 2,
-      pageHeight - 5,
-      { align: 'center' }
-    );
+    const pageCount = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.setTextColor(150);
+      doc.text(
+        `Page ${i} of ${pageCount}`,
+        pageWidth / 2,
+        doc.internal.pageSize.getHeight() - 5,
+        { align: 'center' }
+      );
+    }
 
     // Set response headers
     res.setHeader('Content-Type', 'application/pdf');

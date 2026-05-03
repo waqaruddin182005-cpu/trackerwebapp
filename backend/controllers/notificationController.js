@@ -160,7 +160,7 @@ exports.checkBudgetAlerts = async (userId, category, currentMonthSpending) => {
         user: userId,
         type: 'budget_critical',
         title: `Critical: Budget Exceeded for ${category}`,
-        message: `You have exceeded your ${category} budget limit of $${budget.monthlyLimit}. Current spending: $${currentMonthSpending.toFixed(2)}`,
+        message: `You have exceeded your ${category} budget limit of ₹${budget.monthlyLimit.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}. Current spending: ₹${currentMonthSpending.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
         category,
         amount: budget.monthlyLimit
       });
@@ -179,7 +179,7 @@ exports.checkBudgetAlerts = async (userId, category, currentMonthSpending) => {
         user: userId,
         type: 'budget_warning',
         title: `Warning: ${category} Budget at ${percentageUsed.toFixed(0)}%`,
-        message: `You have used ${percentageUsed.toFixed(0)}% of your ${category} budget. Limit: $${budget.monthlyLimit}, Spent: $${currentMonthSpending.toFixed(2)}`,
+        message: `You have used ${percentageUsed.toFixed(0)}% of your ${category} budget. Limit: ₹${budget.monthlyLimit.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}, Spent: ₹${currentMonthSpending.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
         category,
         amount: budget.monthlyLimit
       });
